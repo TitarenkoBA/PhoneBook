@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <Header />
-    <router-view/>
+    <StopListContainer />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header"
+import StopListContainer from "./components/StopListContainer"
 
 export default {
   name: 'App',
   components: {
     Header,
+    StopListContainer
   }
 }
 </script>
@@ -23,6 +25,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background: rgba(218, 218, 240, 0.5);
 }
 </style>

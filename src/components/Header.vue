@@ -2,9 +2,9 @@
   <div class="header">
     <h1>Title</h1>
     <p>
-      <a>Main</a>
-      /  
-      <a>Stop-list</a>
+      <router-link to="/">Main</router-link> 
+      / 
+      <router-link :to="this.$route.path">{{this.$route.path.slice(1)}}</router-link>
     </p>
   </div>
 </template>
@@ -22,6 +22,14 @@ export default {
     background: white;
     text-align: left;
     padding: 15px;
+    box-sizing: border-box;
   }
 
+  h1 {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
 </style>

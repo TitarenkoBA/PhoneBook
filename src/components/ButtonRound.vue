@@ -22,7 +22,7 @@ export default {
     border-radius: 50px;
     border: none;
     margin-right: 15px;
-    padding: 0 10px;
+    padding: 0;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
     color: white;
     cursor: pointer;
@@ -35,6 +35,15 @@ export default {
 
   button:hover {
     text-shadow: 1px 1px rgba(0, 0, 0, 0.45);
+  }
+
+  button span {
+    padding: 0 10px;
+  }
+
+  button i {
+    padding: 0;
+    margin: 0 auto;
   }
 
   .blue {

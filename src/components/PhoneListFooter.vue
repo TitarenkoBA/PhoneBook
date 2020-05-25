@@ -1,13 +1,13 @@
 <template>
   <div>
     <p>Line on page</p>
-    <select v-model="lines">
+    <select v-model="lines" @change="changeLines">
       <option v-for="item in 5" :key="item" :value="item * 5">{{item * 5}}</option>
     </select>
-    <p>{{ page }} from {{ lines }}</p>
+    <p>{{ page }} from {{ pages }}</p>
     <p>
-      <a @click.prevent="page--">&lt;</a>
-      <a @click.prevent="page++">&gt;</a>
+      <a @click.prevent="pageDown">&lt;</a>
+      <a @click.prevent="pageUp">&gt;</a>
     </p>
   </div>
 </template>
@@ -17,15 +17,30 @@ export default {
   name: "PhoneListFooter",
   data() {
     return {
-      lines: 5,
-      page: 1,
+      lines: this.$store.state.LinesInPage
     }
   },
-  watch: {
-    lines: function(lines) {
-      this.$store.state.LinesInPage = lines
+  computed: {
+    page() {
+      return this.$store.state.CurrentPage
     },
-    page: function(page) {
+    pages() {
+      return (this.$store.state.FilteredNumbers.length % this.lines === 0 ? this.$store.state.FilteredNumbers.length / this.lines : Math.floor((this.$store.state.FilteredNumbers.length / this.lines) + 1, 0))
+    }
+  },
+  methods: {
+    changeLines() {
+      this.$store.state.LinesInPage = this.lines
+      this.$store.state.CurrentPage = 1
+    },
+    pageUp() {
+      let page = this.$store.state.CurrentPage
+      page < this.pages ? page++ : page = this.pages
+      this.$store.state.CurrentPage = page
+    },
+    pageDown() {
+      let page = this.$store.state.CurrentPage
+      page > 1 ? page-- : page = 1
       this.$store.state.CurrentPage = page
     }
   }

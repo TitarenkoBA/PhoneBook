@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ButtonRound color="green" :click="() => this.$router.push('/AddNumber')">Add</ButtonRound>
-    <ButtonRound color="light_blue" click="">X</ButtonRound>
-    <ButtonRound color="purple" click="">X</ButtonRound>
+    <ButtonRound color="green" :click="() => this.$router.push('/AddNumber')"><span>Add</span></ButtonRound>
+    <ButtonRound color="light_blue" click=""><i class="fas fa-trash-alt"></i></ButtonRound>
+    <ButtonRound color="purple" click=""><i class="fas fa-trash-alt"></i></ButtonRound>
   </div> 
 </template>
 

@@ -3,7 +3,7 @@
     <p>{{this.number}}</p>
     <p>
       <i class="fas fa-pen"></i>
-      <i class="fas fa-trash-alt"></i>
+      <i class="fas fa-trash-alt" @click="this.delete"></i>
     </p>
   </div>
 </template>
@@ -12,7 +12,18 @@
 
 export default {
   name: "PhoneListItem",
-  props: ['number'],
+  props: ['number', 'id'],
+  methods: {
+    delete() {
+      const numbers = this.$store.state.Numbers
+      const index = numbers.findIndex((item) => item.id === this.id)
+      const newNumbers = [...numbers]
+      newNumbers.splice(index, 1)
+      this.$store.state.Numbers = [...newNumbers]
+      this.$store.state.FilteredNumbers = [...newNumbers]
+
+    }
+  }
 }
 </script>
 

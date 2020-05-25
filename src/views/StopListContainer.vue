@@ -5,7 +5,7 @@
       <RightButtonsPanel />
     </div>
     <PhoneListHeader />
-    <PhoneListItem v-for="item in phones" :key="item.id" :number="item.phone"/>
+    <PhoneListItem v-for="item in phones" :key="item.id" :number="item.phone" :id="item.id"/>
     <PhoneListFooter />
   </div>
 </template>
@@ -28,11 +28,12 @@ export default {
   },
   computed: {
     phones() {
-      const allNumbers = this.$store.state.numbers
-      const LinesInPage = this.$store.state.LinesInPage
-      const showNumbers = allNumbers.slice(0, LinesInPage)
+      const numbers = this.$store.state.FilteredNumbers
+      const currentPage = this.$store.state.CurrentPage
+      const linesInPage = this.$store.state.LinesInPage
+      const showNumbers = numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)
       return showNumbers
-    }
+    },
   }
 }
 </script>

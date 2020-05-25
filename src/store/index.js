@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        numbers: [ 
+        Numbers: [ 
             { phone: 11111111111111, id: 1 },
             { phone: 22222222222222, id: 2 },
             { phone: 33333333333333, id: 3 },
@@ -16,7 +16,9 @@ export default new Vuex.Store({
             { phone: 88888888888888, id: 8 },
             { phone: 99999999999999, id: 9 },
             { phone: 101010101010110, id: 10 },
+            { phone: 121212121212121, id: 11 },
         ],
+        FilteredNumbers: [],
         LinesInPage: 5,
         CurrentPage: 1,
     },

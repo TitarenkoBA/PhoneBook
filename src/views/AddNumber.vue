@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="add_number_container">
-      <input type="tel" name="tel" pattern="+?[0-9]{11}" placeholder="Enter number" v-model="phone"/>
-      <ButtonRound color="light_blue"><i class="fas fa-check"></i></ButtonRound>
+      <input type="tel" name="tel" placeholder="Enter number" v-model="phone"/>
+      <ButtonRound color="light_blue" :click="addNumber"><i class="fas fa-check"></i></ButtonRound>
     </div>
-    <ButtonRound color="light" class="add_number_container__button_back" :click="() => this.$router.push('/')"> Back </ButtonRound>
+    <ButtonRound color="light" class="add_number_container__button_back" :click="() => this.$router.push('/')"><span>Back</span></ButtonRound>
   </div>
 </template>
 
@@ -15,6 +15,22 @@ export default {
   name: "AddNumber",
   components: {
     ButtonRound,
+  },
+  data() {
+    return {
+      phone: null,
+    }
+  },
+  methods: {
+    addNumber() {
+      const updatedNumbers = [...this.$store.state.Numbers]
+      const newPhone = { phone: this.phone, id: updatedNumbers.length } 
+      updatedNumbers.unshift(newPhone)
+      this.$store.state.FilteredNumbers = null
+      this.$store.state.Numbers = [...updatedNumbers]
+      this.$store.state.CurrentPage = 1
+      this.$router.push('/Stop-list')
+    }
   }
 }
 </script>

@@ -23,8 +23,10 @@ export default new Vuex.Store({
       const currentPage = state.CurrentPage
       const linesInPage = state.LinesInPage
       const numbers = [...state.Numbers]
-      state.LoadingPhones = [...numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)]
-      state.FilteredNumbers = [...state.LoadingPhones]
+      setTimeout(() => {
+        state.LoadingPhones = [...numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)]
+        state.FilteredNumbers = [...state.LoadingPhones]
+      }, 1000)
     },
     SEARCH(state, searchPhone) {
       const allNumbers = [...state.LoadingPhones]
@@ -42,7 +44,6 @@ export default new Vuex.Store({
         updatedNumbers.unshift(newPhone)
         state.Numbers = [...updatedNumbers]
         state.CurrentPage = 1
-        // db.collection('Numbers').add(newPhone)
       }
     },
     DELETE_NUMBER(state, id) {
@@ -50,7 +51,6 @@ export default new Vuex.Store({
       const index = numbers.findIndex((item) => item.id === id)
       numbers.splice(index, 1)
       state.Numbers = [...numbers]
-      // db.collection('Numbers').doc().delete()
     },
     EDIT_NUMBER(state, id) {
       const number = state.Numbers.find((item) => item.id === id)
@@ -99,9 +99,14 @@ export default new Vuex.Store({
       commit('SEARCH', searchPhone)
     },
     ADD_NUMBER({ commit }, number) {
+      // if (number) {
+      //   const newPhone = { phone: +number, id: +(number.toString() + Math.floor(Math.random() * 1000)) }
+      // }
+      // db.collection('Numbers').add(newPhone)
       commit('ADD_NUMBER', number)
     },
     DELETE_NUMBER({ commit }, id) {
+      // db.collection('Numbers').doc(id).delete()
       commit('DELETE_NUMBER', id)
     },
     EDIT_NUMBER({ commit }, id) {

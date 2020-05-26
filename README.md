@@ -1,4 +1,6 @@
-# stop-list
+# PhoneBook
+
+## Vue + Vue Router + Vuex + Firebase
 
 ## Project setup
 ```

@@ -3,24 +3,30 @@ import VueRouter from 'vue-router';
 import Main from "../views/Main"
 import StopListContainer from "../views/StopListContainer"
 import AddNumber from "../views/AddNumber"
+import EditNumber from "../views/EditNumber"
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Main",
+    name: "Главная",
     component: Main
   },
   {
     path: "/Stop-list",
-    name: "Stop-list",
+    name: "Стоп-лист",
     component: StopListContainer
   },
   {
     path: "/AddNumber",
-    name: "AddNumber",
+    name: "Добавить номер",
     component: AddNumber
+  },
+  {
+    path: "/EditNumber",
+    name: "Редактировать номер",
+    component: EditNumber
   },
 ];
 

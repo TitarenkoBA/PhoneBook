@@ -1,10 +1,10 @@
 <template>
   <div>
-    <p>Line on page</p>
+    <p>Строк на странице:</p>
     <select v-model="lines" @change="changeLines">
       <option v-for="item in 5" :key="item" :value="item * 5">{{item * 5}}</option>
     </select>
-    <p>{{ page }} from {{ pages }}</p>
+    <p>{{ page }} из {{ pages }}</p>
     <p>
       <a @click.prevent="pageDown">&lt;</a>
       <a @click.prevent="pageUp">&gt;</a>
@@ -25,23 +25,22 @@ export default {
       return this.$store.state.CurrentPage
     },
     pages() {
-      return (this.$store.state.FilteredNumbers.length % this.lines === 0 ? this.$store.state.FilteredNumbers.length / this.lines : Math.floor((this.$store.state.FilteredNumbers.length / this.lines) + 1, 0))
+      return (this.$store.state.Numbers.length % this.lines === 0 ? this.$store.state.Numbers.length / this.lines : Math.floor((this.$store.state.Numbers.length / this.lines) + 1, 0))
     }
   },
   methods: {
     changeLines() {
-      this.$store.state.LinesInPage = this.lines
-      this.$store.state.CurrentPage = 1
+      this.$store.dispatch('CHANGE_LINES_PER_PAGE', this.lines)
+      this.$store.dispatch('LOAD_PHONES')
+
     },
     pageUp() {
-      let page = this.$store.state.CurrentPage
-      page < this.pages ? page++ : page = this.pages
-      this.$store.state.CurrentPage = page
+      this.$store.dispatch('PAGE_UP', this.pages)
+      this.$store.dispatch('LOAD_PHONES')
     },
     pageDown() {
-      let page = this.$store.state.CurrentPage
-      page > 1 ? page-- : page = 1
-      this.$store.state.CurrentPage = page
+      this.$store.dispatch('PAGE_DOWN')
+      this.$store.dispatch('LOAD_PHONES')
     }
   }
 }
@@ -75,5 +74,14 @@ export default {
     border-bottom: 2px solid rgba(134, 134, 148, 0.5);
     color: inherit;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 900px) {
+    div {
+      display: flex;
+      flex-direction: row !important;
+      justify-content: right;
+      align-items: center;
+    }
   }
 </style>

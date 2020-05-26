@@ -1,12 +1,17 @@
 <template>
   <div class="stop_list_container">
-    <div>
+    <div class="stop_list_container__buttons_panel">
       <Search />
       <RightButtonsPanel />
     </div>
-    <PhoneListHeader />
-    <PhoneListItem v-for="item in phones" :key="item.id" :number="item.phone" :id="item.id"/>
-    <PhoneListFooter />
+    <div v-if="this.$store.state.LoadingPhones !== null">
+      <PhoneListHeader />
+      <PhoneListItem v-for="item in phones" :key="item.id" :number="item.phone" :id="item.id"/>
+      <PhoneListFooter />
+    </div>
+    <div v-else>
+      <div class="lds-circle"><div></div></div>
+    </div>
   </div>
 </template>
 
@@ -28,12 +33,16 @@ export default {
   },
   computed: {
     phones() {
-      const numbers = this.$store.state.FilteredNumbers
-      const currentPage = this.$store.state.CurrentPage
-      const linesInPage = this.$store.state.LinesInPage
-      const showNumbers = numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)
-      return showNumbers
+      return this.$store.state.FilteredNumbers
     },
+  },
+  methods: {
+    loadPhones() {
+      this.$store.dispatch('LOAD_PHONES')
+    }
+  },
+  mounted() {
+    this.loadPhones()
   }
 }
 </script>
@@ -49,7 +58,44 @@ export default {
     box-sizing: border-box;
   }
 
-  .stop_list_container > div {
+  .stop_list_container__buttons_panel {
     display: flex;
+  }
+
+  .lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+  }
+  .lds-circle > div {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    background: #fff;
+    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+  @keyframes lds-circle {
+    0%, 100% {
+      animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+    }
+    0% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(1800deg);
+      animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    }
+    100% {
+      transform: rotateY(3600deg);
+    }
+  }
+
+
+  @media screen and (max-width: 900px) {
+    .stop_list_container__buttons_panel {
+      display: flex;
+      flex-direction: column;
+    }
   }
 </style>

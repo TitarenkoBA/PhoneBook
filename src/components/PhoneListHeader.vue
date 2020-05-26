@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>Telephone</p>
-    <p>Actions</p>
+    <p>Телефон</p>
+    <p>Действия</p>
   </div>
 </template>
 
@@ -24,5 +24,12 @@ export default {
 
   p {
     padding: 0 15px;
+  }
+
+  @media screen and (max-width: 900px) {
+    div {
+      display: flex;
+      flex-direction: row !important;
+    }
   }
 </style>

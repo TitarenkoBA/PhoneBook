@@ -1,8 +1,8 @@
 <template>
   <div>
-    <ButtonRound color="green" :click="() => this.$router.push('/AddNumber')"><span>Add</span></ButtonRound>
-    <ButtonRound color="light_blue" click=""><i class="fas fa-trash-alt"></i></ButtonRound>
-    <ButtonRound color="purple" click=""><i class="fas fa-trash-alt"></i></ButtonRound>
+    <ButtonRound color="green" :click="() => this.$router.push('/AddNumber')"><span>Добавить</span></ButtonRound>
+    <ButtonRound color="light_blue" ><i class="fas fa-file"></i></ButtonRound>
+    <ButtonRound color="purple" ><i class="fas fa-file"></i></ButtonRound>
   </div> 
 </template>
 
@@ -24,5 +24,12 @@ export default {
     text-align: right;
     padding: 15px 0;
     box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 900px) {
+    div {
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>

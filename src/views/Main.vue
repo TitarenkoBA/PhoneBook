@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Main page</h1>
-    <ButtonRound color="light_blue" :click="goStopList"><span>Stop-list</span></ButtonRound>
+    <h1>Главная страница</h1>
+    <ButtonRound color="light_blue" :click="goStopList"><span>Стоп-лист</span></ButtonRound>
   </div>
 </template>
 

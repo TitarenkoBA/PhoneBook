@@ -27,6 +27,7 @@ export default {
     color: white;
     cursor: pointer;
     transition: all 0.3s;
+    text-transform: uppercase;
   }
 
   button:active {

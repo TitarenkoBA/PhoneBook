@@ -1,8 +1,8 @@
 <template>
   <div>
     <i class="fas fa-search"></i>
-    <input type="tel" name="tel" placeholder="Find" v-model="phoneSearchField"/>
-    <ButtonRound color="blue" :click="search"><span>Search</span></ButtonRound>
+    <input type="tel" name="tel" placeholder="Искать" v-model="phoneSearchField"/>
+    <ButtonRound color="blue" :click="search"><span>Найти</span></ButtonRound>
     <ButtonRound color="red" :click="clear"><i class="fas fa-trash-alt"></i></ButtonRound>
   </div>
 </template>
@@ -22,15 +22,7 @@ export default {
   },
   methods: {
     search() {
-      const searchPhone = this.phoneSearchField
-      const allNumbers = this.$store.state.Numbers
-      const filteredNumbers = allNumbers.filter((item) => item.phone.toString().includes(searchPhone))
-      if (searchPhone) {
-        this.$store.state.FilteredNumbers = [...filteredNumbers]
-      } else { 
-        this.$store.state.FilteredNumbers = [...allNumbers]
-      }
-      this.$store.state.CurrentPage = 1
+      this.$store.dispatch('SEARCH', this.phoneSearchField)      
     },
     clear() {
       this.phoneSearchField = ''
@@ -39,7 +31,7 @@ export default {
   },
   mounted() {
     if (!this.phoneSearchField) {
-      this.$store.state.FilteredNumbers = [...this.$store.state.Numbers]
+      this.search()
     }
   }
 }
@@ -64,5 +56,12 @@ export default {
 
   i {
     margin-right: 15px;
+  }
+
+  @media screen and (max-width: 900px) {
+    div {
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>

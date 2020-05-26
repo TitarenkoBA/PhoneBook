@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="add_number_container">
+    <div class="edit_number_container">
       <input type="tel" name="tel" placeholder="Телефон" v-model="phone"/>
-      <ButtonRound color="light_blue" :click="addNumber"><i class="fas fa-check"></i></ButtonRound>
+      <ButtonRound color="light_blue" :click="changeNumber"><i class="fas fa-check"></i></ButtonRound>
     </div>
-    <ButtonRound color="light" class="add_number_container__button_back" :click="() => this.$router.push('/Stop-list')"><span>Назад</span></ButtonRound>
+    <ButtonRound color="light" class="edit_number_container__button_back" :click="() => this.$router.push('/Stop-list')"><span>Назад</span></ButtonRound>
   </div>
 </template>
 
@@ -12,18 +12,21 @@
 import ButtonRound from "../components/ButtonRound"
 
 export default {
-  name: "AddNumber",
+  name: "EditNumber",
   components: {
     ButtonRound,
   },
   data() {
     return {
-      phone: null,
+      editingNumber: this.$store.state.EditingNumber,
+      phone: this.$store.state.EditingNumber.phone,
     }
   },
   methods: {
-    addNumber() {
-      this.$store.dispatch('ADD_NUMBER', this.phone)
+    changeNumber() {
+      const editingNumber = this.editingNumber
+      editingNumber.phone = this.phone
+      this.$store.dispatch('CHANGE_NUMBER', editingNumber)
       this.$router.push('/Stop-list')
     }
   }
@@ -43,7 +46,7 @@ export default {
     box-sizing: border-box;
   }
 
-  .add_number_container {
+  .edit_number_container {
     flex-direction: row;
     justify-content: space-around;
     width: 60%;
@@ -58,7 +61,7 @@ export default {
     margin-right: 15px;
   }
 
-  .add_number_container__button_back {
+  .edit_number_container__button_back {
     color: black;
     font-style: bold;
   }

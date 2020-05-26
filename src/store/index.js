@@ -1,23 +1,13 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
+// import { db } from '../main'
+import PhoneNumbers from './numbers'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    Numbers: [ 
-      { phone: 11111111111111, id: 1 },
-      { phone: 22222222222222, id: 2 },
-      { phone: 33333333333333, id: 3 },
-      { phone: 44444444444444, id: 4 },
-      { phone: 55555555555555, id: 5 },
-      { phone: 66666666666666, id: 6 },
-      { phone: 77777777777777, id: 7 },
-      { phone: 88888888888888, id: 8 },
-      { phone: 99999999999999, id: 9 },
-      { phone: 101010101010110, id: 10 },
-      { phone: 121212121212121, id: 11 },
-    ],
+    Numbers: [],
     FilteredNumbers: [],
     LinesInPage: 5,
     CurrentPage: 1,
@@ -25,15 +15,16 @@ export default new Vuex.Store({
     LoadingPhones: null,
   },
   mutations: {
+    GET_NUMBERS(state, numbers) {
+      state.Numbers = [...numbers]
+    },
     LOAD_PHONES(state) {
       state.LoadingPhones = null
-      const numbers = [...state.Numbers]
       const currentPage = state.CurrentPage
       const linesInPage = state.LinesInPage
-      setTimeout(() => {
-        state.LoadingPhones = [...numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)]
-        state.FilteredNumbers = [...state.LoadingPhones]
-      }, 1000)
+      const numbers = [...state.Numbers]
+      state.LoadingPhones = [...numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)]
+      state.FilteredNumbers = [...state.LoadingPhones]
     },
     SEARCH(state, searchPhone) {
       const allNumbers = [...state.LoadingPhones]
@@ -47,10 +38,11 @@ export default new Vuex.Store({
     ADD_NUMBER(state, number) {
       if (number) {
         const updatedNumbers = [...state.Numbers]
-        const newPhone = { phone: number, id: updatedNumbers.length }
+        const newPhone = { phone: +number, id: +(number.toString() + Math.floor(Math.random()*1000)) }
         updatedNumbers.unshift(newPhone)
         state.Numbers = [...updatedNumbers]
         state.CurrentPage = 1
+        // db.collection('Numbers').add(newPhone)
       }
     },
     DELETE_NUMBER(state, id) {
@@ -58,6 +50,7 @@ export default new Vuex.Store({
       const index = numbers.findIndex((item) => item.id === id)
       numbers.splice(index, 1)
       state.Numbers = [...numbers]
+      // db.collection('Numbers').doc().delete()
     },
     EDIT_NUMBER(state, id) {
       const number = state.Numbers.find((item) => item.id === id)
@@ -88,7 +81,18 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    GET_NUMBERS({ commit }) {
+      commit('GET_NUMBERS', PhoneNumbers)
+    },
     LOAD_PHONES({ commit }) {
+      // const numbers = []
+      // db.collection('Numbers').get()
+      //   .then(
+      //     data => {
+      //       data.forEach((i) => numbers.push({ id: i.get('id'), phone: i.get('phone') }))
+      //       state.LoadingPhones = [...numbers.slice((currentPage - 1) * (linesInPage), linesInPage * currentPage)]
+      //       state.FilteredNumbers = [...state.LoadingPhones]
+      //   })  
       commit('LOAD_PHONES')
     },
     SEARCH({ commit }, searchPhone) {

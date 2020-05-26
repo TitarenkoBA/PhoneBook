@@ -28,11 +28,6 @@ export default {
       this.phoneSearchField = ''
       this.search()
     }
-  },
-  mounted() {
-    if (!this.phoneSearchField) {
-      this.search()
-    }
   }
 }
 </script>

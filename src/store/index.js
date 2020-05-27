@@ -15,8 +15,11 @@ export default new Vuex.Store({
     LoadingPhones: null,
   },
   mutations: {
-    GET_NUMBERS(state, numbers) {
-      state.Numbers = [...numbers]
+    GET_NUMBERS(state) {
+      state.Numbers = [...JSON.parse(localStorage.getItem('PhoneNumbers'))]
+    },
+    UPDATE_LOCAL_STORAGE(state) {
+      state.Numbers = [...JSON.parse(localStorage.getItem('PhoneNumbers'))]
     },
     LOAD_PHONES(state) {
       state.LoadingPhones = null
@@ -82,7 +85,15 @@ export default new Vuex.Store({
   },
   actions: {
     GET_NUMBERS({ commit }) {
-      commit('GET_NUMBERS', PhoneNumbers)
+      if (!localStorage.getItem('LoadNumbersFlag')) {
+        localStorage.setItem('LoadNumbersFlag', 1)
+        localStorage.setItem('PhoneNumbers', JSON.stringify(PhoneNumbers))
+      }
+      commit('GET_NUMBERS')
+    },
+    UPDATE_LOCAL_STORAGE({ commit }, ) {
+      localStorage.setItem('PhoneNumbers', JSON.stringify([...this.state.Numbers]))
+      commit('UPDATE_LOCAL_STORAGE')
     },
     LOAD_PHONES({ commit }) {
       // const numbers = []

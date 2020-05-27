@@ -1,7 +1,7 @@
 <template>
   <div>
     <i class="fas fa-search"></i>
-    <input type="tel" name="tel" placeholder="Искать" v-model="phoneSearchField"/>
+    <input type="tel" name="tel" placeholder="Искать" v-model="phoneSearchField" @keyup="validation"/>
     <ButtonRound color="blue" :click="search"><span>Найти</span></ButtonRound>
     <ButtonRound color="red" :click="clear"><i class="fas fa-trash-alt"></i></ButtonRound>
   </div>
@@ -21,6 +21,11 @@ export default {
     }
   },
   methods: {
+    validation() {
+      const phoneInput = document.querySelector('input')
+      const phoneInputValue = phoneInput.value
+      this.phoneSearchField = phoneInputValue.replace(/[^\d]/g,'')
+    },
     search() {
       this.$store.dispatch('SEARCH', this.phoneSearchField)      
     },

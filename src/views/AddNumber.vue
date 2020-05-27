@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="add_number_container">
-      <input type="tel" name="tel" placeholder="Телефон" v-model="phone"/>
+      <input type="tel" name="tel" placeholder="Телефон" v-model="phone" @keyup="validation"/>
       <ButtonRound color="light_blue" :click="addNumber"><i class="fas fa-check"></i></ButtonRound>
     </div>
     <ButtonRound color="light" class="add_number_container__button_back" :click="() => this.$router.push('/Stop-list')"><span>Назад</span></ButtonRound>
@@ -22,8 +22,14 @@ export default {
     }
   },
   methods: {
+    validation() {
+      const phoneInput = document.querySelector('input')
+      const phoneInputValue = phoneInput.value
+      this.phone = phoneInputValue.replace(/[^\d]/g,'')
+    },
     addNumber() {
       this.$store.dispatch('ADD_NUMBER', this.phone)
+      this.$store.dispatch('UPDATE_LOCAL_STORAGE')
       this.$router.push('/Stop-list')
     }
   }

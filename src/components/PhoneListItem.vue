@@ -20,6 +20,7 @@ export default {
     },
     delete() {
       this.$store.dispatch('DELETE_NUMBER', this.id)
+      this.$store.dispatch('UPDATE_LOCAL_STORAGE')
       this.$store.dispatch('LOAD_PHONES')
     }
   }

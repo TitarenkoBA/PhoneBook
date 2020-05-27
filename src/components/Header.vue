@@ -2,7 +2,7 @@
   <div class="header">
     <h1>{{this.$route.name}}</h1>
     <p>
-      <router-link to="/" v-if="this.$route.name !== 'Главная'">Главная / </router-link> 
+      <router-link to="/" v-if="this.$route.name !== 'Главная'" exact>Главная / </router-link> 
       <router-link :to="this.$route.path">{{this.$route.name}}</router-link>
     </p>
   </div>
